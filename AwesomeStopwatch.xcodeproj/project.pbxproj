@@ -3,19 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		342A694ACD92A3F04F60D8BF /* Pods_AwesomeStopwatchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4CDE8731E0BEB988CD819EE /* Pods_AwesomeStopwatchUITests.framework */; };
 		36B49B5A718212CE6DD7A4A5 /* Pods_AwesomeStopwatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F56C0CE7267052243B3245 /* Pods_AwesomeStopwatch.framework */; };
 		A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E70368229EA83800DBE636 /* AppDelegate.swift */; };
-		A5E7036B229EA83800DBE636 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7036A229EA83800DBE636 /* ViewController.swift */; };
 		A5E7036E229EA83800DBE636 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E7036C229EA83800DBE636 /* Main.storyboard */; };
 		A5E70370229EA83900DBE636 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E7036F229EA83900DBE636 /* Assets.xcassets */; };
 		A5E70373229EA83900DBE636 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E70371229EA83900DBE636 /* LaunchScreen.storyboard */; };
 		A5E7037E229EA83900DBE636 /* AwesomeStopwatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7037D229EA83900DBE636 /* AwesomeStopwatchTests.swift */; };
 		A5E70389229EA83900DBE636 /* AwesomeStopwatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E70388229EA83900DBE636 /* AwesomeStopwatchUITests.swift */; };
+		A5E7039A229EACCE00DBE636 /* DependenciesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E70399229EACCE00DBE636 /* DependenciesContainer.swift */; };
+		A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */; };
+		A5E7039F229EAD9700DBE636 /* StopwatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */; };
+		A5E703A1229EAE4900DBE636 /* StopwatchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */; };
 		CDEB05B7540791FC678C8549 /* Pods_AwesomeStopwatchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C131163AF62F6E87C3A36185 /* Pods_AwesomeStopwatchTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +47,6 @@
 		8A9EBCF8B61610B2F3832280 /* Pods-AwesomeStopwatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatch.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatch/Pods-AwesomeStopwatch.debug.xcconfig"; sourceTree = "<group>"; };
 		A5E70365229EA83800DBE636 /* AwesomeStopwatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AwesomeStopwatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E70368229EA83800DBE636 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A5E7036A229EA83800DBE636 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A5E7036D229EA83800DBE636 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5E7036F229EA83900DBE636 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A5E70372229EA83900DBE636 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,10 @@
 		A5E70384229EA83900DBE636 /* AwesomeStopwatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AwesomeStopwatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E70388229EA83900DBE636 /* AwesomeStopwatchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwesomeStopwatchUITests.swift; sourceTree = "<group>"; };
 		A5E7038A229EA83900DBE636 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5E70399229EACCE00DBE636 /* DependenciesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependenciesContainer.swift; sourceTree = "<group>"; };
+		A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchViewController.swift; sourceTree = "<group>"; };
+		A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchViewModel.swift; sourceTree = "<group>"; };
+		A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchAssembly.swift; sourceTree = "<group>"; };
 		C131163AF62F6E87C3A36185 /* Pods_AwesomeStopwatchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AwesomeStopwatchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FA7C6DEDA7A63E216D771C /* Pods-AwesomeStopwatchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatchTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4CDE8731E0BEB988CD819EE /* Pods_AwesomeStopwatchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AwesomeStopwatchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,8 +130,9 @@
 		A5E70367229EA83800DBE636 /* AwesomeStopwatch */ = {
 			isa = PBXGroup;
 			children = (
+				A5E7039B229EACD100DBE636 /* Stopwatch */,
+				A5E70399229EACCE00DBE636 /* DependenciesContainer.swift */,
 				A5E70368229EA83800DBE636 /* AppDelegate.swift */,
-				A5E7036A229EA83800DBE636 /* ViewController.swift */,
 				A5E7036C229EA83800DBE636 /* Main.storyboard */,
 				A5E7036F229EA83900DBE636 /* Assets.xcassets */,
 				A5E70371229EA83900DBE636 /* LaunchScreen.storyboard */,
@@ -152,6 +159,16 @@
 			path = AwesomeStopwatchUITests;
 			sourceTree = "<group>";
 		};
+		A5E7039B229EACD100DBE636 /* Stopwatch */ = {
+			isa = PBXGroup;
+			children = (
+				A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */,
+				A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */,
+				A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */,
+			);
+			path = Stopwatch;
+			sourceTree = "<group>";
+		};
 		FD8FA071B78A710251868687 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,7 +179,6 @@
 				5562E3E06FF05A90927240C2 /* Pods-AwesomeStopwatchUITests.debug.xcconfig */,
 				0E2B2071CFEDDEA81D075EB7 /* Pods-AwesomeStopwatchUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -387,7 +403,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E7036B229EA83800DBE636 /* ViewController.swift in Sources */,
+				A5E7039F229EAD9700DBE636 /* StopwatchViewModel.swift in Sources */,
+				A5E703A1229EAE4900DBE636 /* StopwatchAssembly.swift in Sources */,
+				A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */,
+				A5E7039A229EACCE00DBE636 /* DependenciesContainer.swift in Sources */,
 				A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

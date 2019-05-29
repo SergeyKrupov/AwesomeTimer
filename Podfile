@@ -6,6 +6,8 @@ target 'AwesomeStopwatch' do
   pod 'RxSwift', '~> 5.0.0'
   pod 'RxCocoa', '~> 5.0.0'
   pod 'RxDataSources', '~> 4.0'
+  pod 'Swinject', '~> 2.6.0'
+  pod 'SwinjectStoryboard', '~> 2.2.0'
 
   target 'AwesomeStopwatchTests' do
     inherit! :search_paths
