@@ -21,6 +21,11 @@ final class StopwatchViewModel {
         let actions: Signal<Event>
     }
 
+    struct LapItem {
+        let name: String
+        let duration: TimeInterval
+    }
+
     func setup(with input: Input) -> Disposable? {
 
         let bindUI: (ObservableSchedulerContext<State>) -> Observable<Event> = bind(self) { this, state in
@@ -70,6 +75,47 @@ final class StopwatchViewModel {
             }
             .asDriver(onErrorJustReturn: .stopped(duration: 0))
 
+        let lapNameFormat = "Lap %d"
+        currentLap = state
+            .map { state -> LapItem? in
+                switch state {
+                case .initial:
+                    return nil
+                case let .running(runningState):
+                    return LapItem(
+                        name: String(format: lapNameFormat, runningState.finishedLaps.count + 1),
+                        duration: runningState.currentLap.duration + CFAbsoluteTimeGetCurrent() - runningState.startAt
+                    )
+                case let .paused(pausedState):
+                    return LapItem(
+                        name: String(format: lapNameFormat, pausedState.finishedLaps.count + 1),
+                        duration: pausedState.currentLap.duration
+                    )
+                }
+            }
+            .asDriver(onErrorJustReturn: nil)
+
+        finishedLaps = state
+            .map { state -> [LapItem] in
+                let laps: [Lap]
+                switch state {
+                case .initial:
+                    return []
+                case let .running(runningState):
+                    laps = runningState.finishedLaps
+                case let .paused(pausedState):
+                    laps = pausedState.finishedLaps
+                }
+
+                return laps.enumerated().map {
+                    LapItem(
+                        name: String(format: lapNameFormat, laps.count - $0.offset),
+                        duration: $0.element.duration
+                    )
+                }
+            }
+            .asDriver(onErrorJustReturn: [])
+
         return state.subscribe()
     }
 
@@ -77,6 +123,8 @@ final class StopwatchViewModel {
     private(set) var leftButtonAction: Driver<Event>!
     private(set) var rightButtonAction: Driver<Event>!
     private(set) var timerState: Driver<TimerState>!
+    private(set) var currentLap: Driver<LapItem?>!
+    private(set) var finishedLaps: Driver<[LapItem]>!
 
     // MARK: - Private
     private func reduce(state: State, event: Event) -> State {
