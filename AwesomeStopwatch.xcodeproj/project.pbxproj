@@ -19,6 +19,8 @@
 		A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */; };
 		A5E7039F229EAD9700DBE636 /* StopwatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */; };
 		A5E703A1229EAE4900DBE636 /* StopwatchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */; };
+		A5E703A4229EB48C00DBE636 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E703A3229EB48C00DBE636 /* State.swift */; };
+		A5E703A6229EB60000DBE636 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E703A5229EB60000DBE636 /* Event.swift */; };
 		CDEB05B7540791FC678C8549 /* Pods_AwesomeStopwatchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C131163AF62F6E87C3A36185 /* Pods_AwesomeStopwatchTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,8 @@
 		A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchViewController.swift; sourceTree = "<group>"; };
 		A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchViewModel.swift; sourceTree = "<group>"; };
 		A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchAssembly.swift; sourceTree = "<group>"; };
+		A5E703A3229EB48C00DBE636 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		A5E703A5229EB60000DBE636 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C131163AF62F6E87C3A36185 /* Pods_AwesomeStopwatchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AwesomeStopwatchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7FA7C6DEDA7A63E216D771C /* Pods-AwesomeStopwatchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatchTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4CDE8731E0BEB988CD819EE /* Pods_AwesomeStopwatchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AwesomeStopwatchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,11 +166,21 @@
 		A5E7039B229EACD100DBE636 /* Stopwatch */ = {
 			isa = PBXGroup;
 			children = (
+				A5E703A2229EB47000DBE636 /* Models */,
 				A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */,
 				A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */,
 				A5E703A0229EAE4900DBE636 /* StopwatchAssembly.swift */,
 			);
 			path = Stopwatch;
+			sourceTree = "<group>";
+		};
+		A5E703A2229EB47000DBE636 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A5E703A3229EB48C00DBE636 /* State.swift */,
+				A5E703A5229EB60000DBE636 /* Event.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		FD8FA071B78A710251868687 /* Pods */ = {
@@ -408,6 +422,8 @@
 				A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */,
 				A5E7039A229EACCE00DBE636 /* DependenciesContainer.swift in Sources */,
 				A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */,
+				A5E703A6229EB60000DBE636 /* Event.swift in Sources */,
+				A5E703A4229EB48C00DBE636 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

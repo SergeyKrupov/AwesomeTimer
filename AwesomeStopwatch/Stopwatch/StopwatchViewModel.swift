@@ -7,6 +7,8 @@
 //
 
 import RxSwift
+import RxCocoa
+import RxFeedback
 
 final class StopwatchViewModel {
 
@@ -16,6 +18,19 @@ final class StopwatchViewModel {
 
     func setup(with input: Input) -> Disposable? {
 
-        return nil
+        let state = Observable.system(
+            initialState: State.initial,
+            reduce: reduce,
+            scheduler: MainScheduler.instance,
+            feedback: []
+        )
+        .share(replay: 1)
+
+        return state.subscribe()
+    }
+
+    // MARK: - Private
+    private func reduce(state: State, event: Event) -> State {
+        return state
     }
 }
