@@ -12,15 +12,20 @@ import SwinjectStoryboard
 final class StopwatchAssembly: Assembly {
 
     func assemble(container: Container) {
+        container.register(DurationConverter.self) { resolver -> DurationConverter in
+            return DurationConverter()
+        }
+        .inObjectScope(.container)
+
         container.register(StopwatchViewModel.self) { resolver -> StopwatchViewModel in
-            return StopwatchViewModel()
+            return StopwatchViewModel(
+                durationConverter: resolver.resolve(DurationConverter.self)!
+            )
         }
 
         container.storyboardInitCompleted(StopwatchViewController.self) { resolver, viewController in
-            guard let viewModel = resolver.resolve(StopwatchViewModel.self) else {
-                fatalError()
-            }
-            viewController.viewModel = viewModel
+            viewController.viewModel = resolver.resolve(StopwatchViewModel.self)!
+            viewController.durationConverter = resolver.resolve(DurationConverter.self)!
         }
     }
 }

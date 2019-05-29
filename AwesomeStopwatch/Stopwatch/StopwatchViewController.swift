@@ -15,9 +15,13 @@ final class StopwatchViewController: UIViewController {
     @IBOutlet private var timeLabel: UILabel!
     @IBOutlet private var leftButton: UIButton!
     @IBOutlet private var rightButton: UIButton!
+    @IBOutlet private var lapsTableView: UITableView!
 
+    // MARK: - Dependencies
     var viewModel: StopwatchViewModel!
+    var durationConverter: DurationConverter!
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,7 +54,7 @@ final class StopwatchViewController: UIViewController {
                     return .just(duration)
                 }
             }
-            .map { String(format: "%.2f", $0) }
+            .map { [converter = durationConverter!] duration in converter.string(from: duration) }
             .drive(timeLabel.rx.text)
             .disposed(by: disposeBag)
 
@@ -62,6 +66,15 @@ final class StopwatchViewController: UIViewController {
 
         Observable.merge(leftAction, rightAction)
             .bind(to: actionsRelay)
+            .disposed(by: disposeBag)
+
+        let identifier = "LapCell"
+        lapsTableView.register(UINib.init(nibName: "LapTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+        viewModel.allLaps
+            .drive(lapsTableView.rx.items(cellIdentifier: identifier)) { [converter = durationConverter!] index, model, cell in
+                let lapCell = cell as! LapTableViewCell
+                lapCell.setup(with: model, durationConverter: converter)
+            }
             .disposed(by: disposeBag)
     }
 

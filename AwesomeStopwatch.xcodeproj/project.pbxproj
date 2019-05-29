@@ -12,6 +12,10 @@
 		A5610FAB229ED6CC00C9B6C5 /* Lap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAA229ED6CC00C9B6C5 /* Lap.swift */; };
 		A5610FAD229ED72700C9B6C5 /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAC229ED72700C9B6C5 /* RunningState.swift */; };
 		A5610FAF229ED79200C9B6C5 /* PausedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAE229ED79200C9B6C5 /* PausedState.swift */; };
+		A5610FB3229EF4B300C9B6C5 /* LapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FB1229EF4B300C9B6C5 /* LapTableViewCell.swift */; };
+		A5610FB4229EF4B300C9B6C5 /* LapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5610FB2229EF4B300C9B6C5 /* LapTableViewCell.xib */; };
+		A5610FB7229EF73500C9B6C5 /* DurationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FB6229EF73500C9B6C5 /* DurationConverter.swift */; };
+		A562917C229F01A100C57B38 /* LapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A562917B229F01A100C57B38 /* LapItem.swift */; };
 		A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E70368229EA83800DBE636 /* AppDelegate.swift */; };
 		A5E7036E229EA83800DBE636 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E7036C229EA83800DBE636 /* Main.storyboard */; };
 		A5E70370229EA83900DBE636 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E7036F229EA83900DBE636 /* Assets.xcassets */; };
@@ -53,6 +57,10 @@
 		A5610FAA229ED6CC00C9B6C5 /* Lap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lap.swift; sourceTree = "<group>"; };
 		A5610FAC229ED72700C9B6C5 /* RunningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningState.swift; sourceTree = "<group>"; };
 		A5610FAE229ED79200C9B6C5 /* PausedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedState.swift; sourceTree = "<group>"; };
+		A5610FB1229EF4B300C9B6C5 /* LapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapTableViewCell.swift; sourceTree = "<group>"; };
+		A5610FB2229EF4B300C9B6C5 /* LapTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LapTableViewCell.xib; sourceTree = "<group>"; };
+		A5610FB6229EF73500C9B6C5 /* DurationConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationConverter.swift; sourceTree = "<group>"; };
+		A562917B229F01A100C57B38 /* LapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapItem.swift; sourceTree = "<group>"; };
 		A5E70365229EA83800DBE636 /* AwesomeStopwatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AwesomeStopwatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E70368229EA83800DBE636 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5E7036D229EA83800DBE636 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -115,6 +123,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A5610FB0229EF41200C9B6C5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A5610FB1229EF4B300C9B6C5 /* LapTableViewCell.swift */,
+				A5610FB2229EF4B300C9B6C5 /* LapTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A5610FB5229EF6F800C9B6C5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A5610FB6229EF73500C9B6C5 /* DurationConverter.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		A562917A229F017F00C57B38 /* UIModels */ = {
+			isa = PBXGroup;
+			children = (
+				A562917B229F01A100C57B38 /* LapItem.swift */,
+			);
+			path = UIModels;
+			sourceTree = "<group>";
+		};
 		A5E7035C229EA83800DBE636 = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +205,9 @@
 		A5E7039B229EACD100DBE636 /* Stopwatch */ = {
 			isa = PBXGroup;
 			children = (
+				A562917A229F017F00C57B38 /* UIModels */,
+				A5610FB5229EF6F800C9B6C5 /* Utils */,
+				A5610FB0229EF41200C9B6C5 /* Cells */,
 				A5E703A2229EB47000DBE636 /* Models */,
 				A5E7039C229EAD8100DBE636 /* StopwatchViewController.swift */,
 				A5E7039E229EAD9700DBE636 /* StopwatchViewModel.swift */,
@@ -314,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E70373229EA83900DBE636 /* LaunchScreen.storyboard in Resources */,
+				A5610FB4229EF4B300C9B6C5 /* LapTableViewCell.xib in Resources */,
 				A5E70370229EA83900DBE636 /* Assets.xcassets in Resources */,
 				A5E7036E229EA83800DBE636 /* Main.storyboard in Resources */,
 			);
@@ -431,11 +468,14 @@
 				A5E703A1229EAE4900DBE636 /* StopwatchAssembly.swift in Sources */,
 				A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */,
 				A5610FAD229ED72700C9B6C5 /* RunningState.swift in Sources */,
+				A562917C229F01A100C57B38 /* LapItem.swift in Sources */,
 				A5E7039A229EACCE00DBE636 /* DependenciesContainer.swift in Sources */,
 				A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */,
 				A5610FAF229ED79200C9B6C5 /* PausedState.swift in Sources */,
+				A5610FB7229EF73500C9B6C5 /* DurationConverter.swift in Sources */,
 				A5E703A6229EB60000DBE636 /* Event.swift in Sources */,
 				A5E703A4229EB48C00DBE636 /* State.swift in Sources */,
+				A5610FB3229EF4B300C9B6C5 /* LapTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

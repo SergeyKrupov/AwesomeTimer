@@ -21,9 +21,8 @@ final class StopwatchViewModel {
         let actions: Signal<Event>
     }
 
-    struct LapItem {
-        let name: String
-        let duration: TimeInterval
+    init(durationConverter: DurationConverter) {
+        self.durationConverter = durationConverter
     }
 
     func setup(with input: Input) -> Disposable? {
@@ -49,6 +48,7 @@ final class StopwatchViewModel {
                     return .lap
                 }
             }
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .reset)
 
         rightButtonAction = state
@@ -60,6 +60,7 @@ final class StopwatchViewModel {
                     return .stop
                 }
             }
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .start)
 
         timerState = state
@@ -76,44 +77,41 @@ final class StopwatchViewModel {
             .asDriver(onErrorJustReturn: .stopped(duration: 0))
 
         let lapNameFormat = "Lap %d"
-        currentLap = state
-            .map { state -> LapItem? in
+        allLaps = state
+            .map { state -> (finishedLaps: [Lap], currentLap: Lap?, startAt: CFAbsoluteTime?) in
                 switch state {
                 case .initial:
-                    return nil
+                    return ([], nil, nil)
                 case let .running(runningState):
-                    return LapItem(
-                        name: String(format: lapNameFormat, runningState.finishedLaps.count + 1),
-                        duration: runningState.currentLap.duration + CFAbsoluteTimeGetCurrent() - runningState.startAt
-                    )
+                    return (runningState.finishedLaps, runningState.currentLap, runningState.startAt)
                 case let .paused(pausedState):
-                    return LapItem(
-                        name: String(format: lapNameFormat, pausedState.finishedLaps.count + 1),
-                        duration: pausedState.currentLap.duration
-                    )
+                    return (pausedState.finishedLaps, pausedState.currentLap, nil)
                 }
             }
-            .asDriver(onErrorJustReturn: nil)
+            .map { tuple -> [LapItem] in
+                let count = tuple.finishedLaps.count + (tuple.currentLap == nil ? 0 : 1)
 
-        finishedLaps = state
-            .map { state -> [LapItem] in
-                let laps: [Lap]
-                switch state {
-                case .initial:
-                    return []
-                case let .running(runningState):
-                    laps = runningState.finishedLaps
-                case let .paused(pausedState):
-                    laps = pausedState.finishedLaps
-                }
-
-                return laps.enumerated().map {
+                let finishedItems = tuple.finishedLaps.enumerated().map {
                     LapItem(
-                        name: String(format: lapNameFormat, laps.count - $0.offset),
-                        duration: $0.element.duration
+                        name: String(format: lapNameFormat, count - $0.offset - (tuple.currentLap == nil ? 0 : 1)),
+                        duration: $0.element.duration,
+                        starteAt: nil
                     )
                 }
+
+                guard let currentLap = tuple.currentLap else {
+                    return finishedItems
+                }
+
+                let currentItem = LapItem(
+                    name: String(format: lapNameFormat, count),
+                    duration: currentLap.duration,
+                    starteAt: tuple.startAt
+                )
+
+                return [currentItem] + finishedItems
             }
+            .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
 
         return state.subscribe()
@@ -123,10 +121,11 @@ final class StopwatchViewModel {
     private(set) var leftButtonAction: Driver<Event>!
     private(set) var rightButtonAction: Driver<Event>!
     private(set) var timerState: Driver<TimerState>!
-    private(set) var currentLap: Driver<LapItem?>!
-    private(set) var finishedLaps: Driver<[LapItem]>!
+    private(set) var allLaps: Driver<[LapItem]>!
 
     // MARK: - Private
+    private let durationConverter: DurationConverter
+
     private func reduce(state: State, event: Event) -> State {
 
         let now = CFAbsoluteTimeGetCurrent()
