@@ -1,51 +1,50 @@
 PODS:
-  - Differentiator (4.0.1)
-  - RxCocoa (5.0.0):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxDataSources (4.0.1):
-    - Differentiator (~> 4.0)
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - RxFeedback (3.0.0):
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - RxRelay (5.0.0):
-    - RxSwift (~> 5)
-  - RxSwift (5.0.0)
-  - Swinject (2.6.0)
-  - SwinjectStoryboard (2.2.0):
-    - Swinject (~> 2.6)
+  - Differentiator (3.1.0)
+  - RxAtomic (4.4.0)
+  - RxCocoa (4.4.0):
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxFeedback (1.1.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.4.0):
+    - RxAtomic (~> 4.4)
+  - Swinject (2.5.0)
+  - SwinjectStoryboard (2.1.0):
+    - Swinject (~> 2.5)
 
 DEPENDENCIES:
-  - RxCocoa (~> 5.0.0)
-  - RxDataSources (~> 4.0)
-  - RxFeedback (~> 3.0)
-  - RxSwift (~> 5.0.0)
-  - Swinject (~> 2.6.0)
-  - SwinjectStoryboard (~> 2.2.0)
+  - RxCocoa
+  - RxDataSources
+  - RxFeedback
+  - RxSwift
+  - Swinject
+  - SwinjectStoryboard
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Differentiator
+    - RxAtomic
     - RxCocoa
     - RxDataSources
     - RxFeedback
-    - RxRelay
     - RxSwift
     - Swinject
     - SwinjectStoryboard
 
 SPEC CHECKSUMS:
-  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
-  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxFeedback: 4260d8dad5bba28b182c0b9ff5bce68c260de183
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
-  Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
-  SwinjectStoryboard: 32512ef16c2b0ff5b8f823b23539c4a50f6d3383
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
+  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
+  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxFeedback: 640e317bc7f6c4914c39a2063c6d5c0e6c1aa65d
+  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  Swinject: 82cdb851f63f91bba974e3eca1d69780f2f7677e
+  SwinjectStoryboard: 688f096033103e66ffcf6ca678211acd7d7be505
 
-PODFILE CHECKSUM: 20e8d84ff614151fded799e049b720a4e183b93b
+PODFILE CHECKSUM: 3c993928f23d7cc468869eae27016adade0524a4
 
 COCOAPODS: 1.7.0

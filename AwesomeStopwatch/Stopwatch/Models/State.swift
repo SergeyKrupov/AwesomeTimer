@@ -8,6 +8,6 @@
 
 enum State {
     case initial
-    case running
-    case paused
+    case running(RunningState)
+    case paused(PausedState)
 }
