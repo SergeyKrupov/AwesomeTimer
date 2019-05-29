@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RunningState {
+struct RunningState: Codable, Equatable {
     let startAt: CFAbsoluteTime
     let currentLap: Lap
     let finishedLaps: [Lap]

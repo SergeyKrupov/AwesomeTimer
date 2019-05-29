@@ -21,8 +21,9 @@ final class StopwatchViewModel {
         let actions: Signal<Event>
     }
 
-    init(durationConverter: DurationConverter) {
+    init(durationConverter: DurationConverter, stateHolder: StopwatchStateHolder) {
         self.durationConverter = durationConverter
+        self.stateHolder = stateHolder
     }
 
     func setup(with input: Input) -> Disposable? {
@@ -32,7 +33,7 @@ final class StopwatchViewModel {
         }
 
         let state = Observable.system(
-            initialState: State.initial,
+            initialState: stateHolder.obtain(),
             reduce: reduce,
             scheduler: MainScheduler.instance,
             scheduledFeedback: [bindUI]
@@ -114,7 +115,11 @@ final class StopwatchViewModel {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
 
-        return state.subscribe()
+        return state.distinctUntilChanged()
+            .observeOn(SerialDispatchQueueScheduler(qos: .default))
+            .subscribe(onNext: { [holder = stateHolder] state in
+                holder.store(state)
+            })
     }
 
     // MARK: - Public
@@ -125,6 +130,7 @@ final class StopwatchViewModel {
 
     // MARK: - Private
     private let durationConverter: DurationConverter
+    private let stateHolder: StopwatchStateHolder
 
     private func reduce(state: State, event: Event) -> State {
 

@@ -17,9 +17,14 @@ final class StopwatchAssembly: Assembly {
         }
         .inObjectScope(.container)
 
+        container.register(StopwatchStateHolder.self) { resolver -> StopwatchStateHolder in
+            return StopwatchStateHolderImpl()
+        }
+
         container.register(StopwatchViewModel.self) { resolver -> StopwatchViewModel in
             return StopwatchViewModel(
-                durationConverter: resolver.resolve(DurationConverter.self)!
+                durationConverter: resolver.resolve(DurationConverter.self)!,
+                stateHolder: resolver.resolve(StopwatchStateHolder.self)!
             )
         }
 

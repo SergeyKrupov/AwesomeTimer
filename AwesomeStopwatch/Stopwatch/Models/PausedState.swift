@@ -6,7 +6,7 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
-struct PausedState {
+struct PausedState: Codable, Equatable {
     let currentLap: Lap
     let finishedLaps: [Lap]
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Lap {
+struct Lap: Codable, Equatable {
     let duration: TimeInterval
 }
 

@@ -11,6 +11,10 @@ import Foundation
 final class DurationConverter {
 
     func string(from duration: TimeInterval) -> String {
-        return String(format: "%.2f", duration)
+        let minutes = Int(duration / 60)
+        let seconds = Int(duration - Double(minutes) * 60)
+        let fraction = Int(duration * 100) % 100
+
+        return String(format: "%02d:%02d,%02d", minutes, seconds, fraction)
     }
 }
