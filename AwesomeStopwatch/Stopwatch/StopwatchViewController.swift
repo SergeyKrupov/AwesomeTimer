@@ -97,6 +97,9 @@ private extension UIButton {
             title = "Lap"
         }
 
-        setTitle(title, for: .normal)
+        UIView.performWithoutAnimation {
+            setTitle(title, for: .normal)
+            layoutIfNeeded()
+        }
     }
 }
