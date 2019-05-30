@@ -6,8 +6,8 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
-import UIKit
 import RxSwift
+import UIKit
 
 final class LapTableViewCell: UITableViewCell {
 

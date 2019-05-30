@@ -9,6 +9,7 @@ target 'AwesomeStopwatch' do
   pod 'Swinject' #, '~> 2.6.0'
   pod 'SwinjectStoryboard' #, '~> 2.2.0'
   pod 'RxFeedback' #, '~> 3.0'
+  pod 'SwiftLint'
 
   target 'AwesomeStopwatchTests' do
     inherit! :search_paths

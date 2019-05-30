@@ -6,9 +6,9 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
 import RxFeedback
+import RxSwift
 
 final class StopwatchViewModel {
 
@@ -28,7 +28,7 @@ final class StopwatchViewModel {
 
     func setup(with input: Input) -> Disposable? {
 
-        let bindUI: (ObservableSchedulerContext<State>) -> Observable<Event> = bind(self) { this, state in
+        let bindUI: (ObservableSchedulerContext<State>) -> Observable<Event> = bind(self) { _, _ in
             return Bindings(subscriptions: [], mutations: [input.actions])
         }
 
@@ -40,7 +40,30 @@ final class StopwatchViewModel {
         )
         .share(replay: 1)
 
-        leftButtonAction = state
+        leftButtonAction = makeLeftButtonAction(state)
+        rightButtonAction = makeRightButtonAction(state)
+        timerState = makeTimerState(state)
+        allLaps = makeLaps(state)
+
+        return state.distinctUntilChanged()
+            .observeOn(SerialDispatchQueueScheduler(qos: .default))
+            .subscribe(onNext: { [holder = stateHolder] state in
+                holder.store(state)
+            })
+    }
+
+    // MARK: - Public
+    private(set) var leftButtonAction: Driver<Event>!
+    private(set) var rightButtonAction: Driver<Event>!
+    private(set) var timerState: Driver<TimerState>!
+    private(set) var allLaps: Driver<[LapItem]>!
+
+    // MARK: - Private
+    private let durationConverter: DurationConverter
+    private let stateHolder: StopwatchStateHolder
+
+    private func makeLeftButtonAction(_ state: Observable<State>) -> Driver<Event> {
+        return state
             .map { state -> Event in
                 switch state {
                 case .initial, .paused:
@@ -51,8 +74,10 @@ final class StopwatchViewModel {
             }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .reset)
+    }
 
-        rightButtonAction = state
+    private func makeRightButtonAction(_ state: Observable<State>) -> Driver<Event> {
+        return state
             .map { state -> Event in
                 switch state {
                 case .initial, .paused:
@@ -63,8 +88,10 @@ final class StopwatchViewModel {
             }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: .start)
+    }
 
-        timerState = state
+    private func makeTimerState(_ state: Observable<State>) -> Driver<TimerState> {
+        return state
             .map { state -> TimerState in
                 switch state {
                 case .initial:
@@ -76,9 +103,11 @@ final class StopwatchViewModel {
                 }
             }
             .asDriver(onErrorJustReturn: .stopped(duration: 0))
+    }
 
+    private func makeLaps(_ state: Observable<State>) -> Driver<[LapItem]> {
         let lapNameFormat = "Lap %d"
-        allLaps = state
+        return state
             .map { state -> (finishedLaps: [Lap], currentLap: Lap?, startAt: CFAbsoluteTime?) in
                 switch state {
                 case .initial:
@@ -114,23 +143,7 @@ final class StopwatchViewModel {
             }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
-
-        return state.distinctUntilChanged()
-            .observeOn(SerialDispatchQueueScheduler(qos: .default))
-            .subscribe(onNext: { [holder = stateHolder] state in
-                holder.store(state)
-            })
     }
-
-    // MARK: - Public
-    private(set) var leftButtonAction: Driver<Event>!
-    private(set) var rightButtonAction: Driver<Event>!
-    private(set) var timerState: Driver<TimerState>!
-    private(set) var allLaps: Driver<[LapItem]>!
-
-    // MARK: - Private
-    private let durationConverter: DurationConverter
-    private let stateHolder: StopwatchStateHolder
 
     private func reduce(state: State, event: Event) -> State {
 

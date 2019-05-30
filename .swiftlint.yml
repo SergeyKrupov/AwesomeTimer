@@ -1,0 +1,53 @@
+included:
+  - AwesomeStopwatch
+  
+excluded:
+  - Pods
+
+disabled_rules:
+  - force_cast
+  - object_literal
+
+opt_in_rules:
+  - empty_count
+  - conditional_returns_on_newline
+  - explicit_init
+  - closure_spacing
+  - overridden_super_call
+  - redundant_nil_coalescing
+  - private_outlet
+  - nimble_operator
+  - attributes
+  - joined_default_parameter
+  - operator_usage_whitespace
+  - first_where
+  - sorted_imports
+  - object_literal
+  - number_separator
+  - prohibited_super_call
+  - fatal_error_message
+  - vertical_parameter_alignment_on_call
+  - let_var_whitespace
+  - unneeded_parentheses_in_closure_argument
+  - extension_access_modifier
+  - pattern_matching_keywords
+  - multiline_parameters
+  - switch_case_on_newline
+
+identifier_name:
+  excluded:
+    - id
+  allowed_symbols:
+    - _
+line_length: 144
+type_name:
+  max_length:
+    warning: 50
+    error: 60
+
+number_separator:
+  minimum_length: 5
+
+nesting:
+  type_level:
+    warning: 2

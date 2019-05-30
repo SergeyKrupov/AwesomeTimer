@@ -6,8 +6,8 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
-import RxSwift
 import RxCocoa
+import RxSwift
 import UIKit
 
 final class StopwatchViewController: UIViewController {
@@ -69,9 +69,9 @@ final class StopwatchViewController: UIViewController {
             .disposed(by: disposeBag)
 
         let identifier = "LapCell"
-        lapsTableView.register(UINib.init(nibName: "LapTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+        lapsTableView.register(UINib(nibName: "LapTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
         viewModel.allLaps
-            .drive(lapsTableView.rx.items(cellIdentifier: identifier)) { [converter = durationConverter!] index, model, cell in
+            .drive(lapsTableView.rx.items(cellIdentifier: identifier)) { [converter = durationConverter!] _, model, cell in
                 let lapCell = cell as! LapTableViewCell
                 lapCell.setup(with: model, durationConverter: converter)
             }

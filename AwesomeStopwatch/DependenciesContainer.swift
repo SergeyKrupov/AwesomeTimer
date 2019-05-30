@@ -10,7 +10,8 @@ import SwinjectStoryboard
 
 extension SwinjectStoryboard {
 
-    @objc class func setup() {
+    @objc
+    class func setup() {
         StopwatchAssembly().assemble(container: defaultContainer)
     }
 }

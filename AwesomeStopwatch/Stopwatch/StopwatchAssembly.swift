@@ -12,12 +12,12 @@ import SwinjectStoryboard
 final class StopwatchAssembly: Assembly {
 
     func assemble(container: Container) {
-        container.register(DurationConverter.self) { resolver -> DurationConverter in
+        container.register(DurationConverter.self) { _ -> DurationConverter in
             return DurationConverter()
         }
         .inObjectScope(.container)
 
-        container.register(StopwatchStateHolder.self) { resolver -> StopwatchStateHolder in
+        container.register(StopwatchStateHolder.self) { _ -> StopwatchStateHolder in
             return StopwatchStateHolderImpl()
         }
 
