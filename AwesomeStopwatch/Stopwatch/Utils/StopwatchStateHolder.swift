@@ -31,5 +31,4 @@ final class StopwatchStateHolderImpl: StopwatchStateHolder {
 
     // MARK: - Private
     let key = "stopwatch-state"
-
 }

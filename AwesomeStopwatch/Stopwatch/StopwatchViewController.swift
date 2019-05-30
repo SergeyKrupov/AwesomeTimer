@@ -25,7 +25,7 @@ final class StopwatchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let actionsRelay = PublishRelay<Event>()
+        let actionsRelay = PublishRelay<Action>()
 
         let input = StopwatchViewModel.Input(actions: actionsRelay.asSignal())
 
@@ -81,8 +81,6 @@ final class StopwatchViewController: UIViewController {
     // MARK: - Private
     private let disposeBag = DisposeBag()
 }
-
-private typealias Action = Event
 
 private extension UIButton {
 

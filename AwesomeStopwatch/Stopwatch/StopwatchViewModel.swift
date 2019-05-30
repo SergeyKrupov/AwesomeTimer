@@ -18,7 +18,7 @@ final class StopwatchViewModel {
     }
 
     struct Input {
-        let actions: Signal<Event>
+        let actions: Signal<Action>
     }
 
     init(durationConverter: DurationConverter, stateHolder: StopwatchStateHolder) {
@@ -28,7 +28,7 @@ final class StopwatchViewModel {
 
     func setup(with input: Input) -> Disposable? {
 
-        let bindUI: (ObservableSchedulerContext<State>) -> Observable<Event> = bind(self) { _, _ in
+        let bindUI: (ObservableSchedulerContext<State>) -> Observable<Action> = bind(self) { _, _ in
             return Bindings(subscriptions: [], mutations: [input.actions])
         }
 
@@ -53,8 +53,8 @@ final class StopwatchViewModel {
     }
 
     // MARK: - Public
-    private(set) var leftButtonAction: Driver<Event>!
-    private(set) var rightButtonAction: Driver<Event>!
+    private(set) var leftButtonAction: Driver<Action>!
+    private(set) var rightButtonAction: Driver<Action>!
     private(set) var timerState: Driver<TimerState>!
     private(set) var allLaps: Driver<[LapItem]>!
 
@@ -62,9 +62,9 @@ final class StopwatchViewModel {
     private let durationConverter: DurationConverter
     private let stateHolder: StopwatchStateHolder
 
-    private func makeLeftButtonAction(_ state: Observable<State>) -> Driver<Event> {
+    private func makeLeftButtonAction(_ state: Observable<State>) -> Driver<Action> {
         return state
-            .map { state -> Event in
+            .map { state -> Action in
                 switch state {
                 case .initial, .paused:
                     return .reset
@@ -76,9 +76,9 @@ final class StopwatchViewModel {
             .asDriver(onErrorJustReturn: .reset)
     }
 
-    private func makeRightButtonAction(_ state: Observable<State>) -> Driver<Event> {
+    private func makeRightButtonAction(_ state: Observable<State>) -> Driver<Action> {
         return state
-            .map { state -> Event in
+            .map { state -> Action in
                 switch state {
                 case .initial, .paused:
                     return .start
@@ -145,11 +145,11 @@ final class StopwatchViewModel {
             .asDriver(onErrorJustReturn: [])
     }
 
-    private func reduce(state: State, event: Event) -> State {
+    private func reduce(state: State, action: Action) -> State {
 
         let now = CFAbsoluteTimeGetCurrent()
 
-        switch (state, event) {
+        switch (state, action) {
         case (.initial, .start):
             let runningState = RunningState(
                 startAt: CFAbsoluteTimeGetCurrent(),

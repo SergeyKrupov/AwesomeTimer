@@ -30,6 +30,7 @@ extension State: Equatable {
 
 extension State: Codable {
 
+    // MARK: - Codable
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let type = try container.decode(StateType.self, forKey: .type)
@@ -58,6 +59,7 @@ extension State: Codable {
         }
     }
 
+    // MARK: - Private
     private enum Key: CodingKey {
         case type
         case value
@@ -68,5 +70,4 @@ extension State: Codable {
         case running
         case paused
     }
-
 }
