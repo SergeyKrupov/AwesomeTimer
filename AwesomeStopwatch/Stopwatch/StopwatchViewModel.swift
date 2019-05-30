@@ -35,7 +35,7 @@ final class StopwatchViewModel {
         let state = Observable.system(
             initialState: stateHolder.obtain(),
             reduce: reduce,
-            scheduler: MainScheduler.instance,
+            scheduler: SerialDispatchQueueScheduler(qos: .default),
             scheduledFeedback: [bindUI]
         )
         .share(replay: 1)
