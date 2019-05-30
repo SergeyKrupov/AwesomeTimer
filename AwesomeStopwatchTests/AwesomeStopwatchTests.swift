@@ -6,29 +6,63 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
+import RxCocoa
+import RxSwift
 import XCTest
 @testable import AwesomeStopwatch
 
 class AwesomeStopwatchTests: XCTestCase {
 
+    var stateHolder: MockStateHolder!
+    var viewModel: StopwatchViewModel!
+    var actionsRelay: PublishRelay<Action>!
+    var input: StopwatchViewModel.Input!
+
+    let durationConverter = DurationConverter()
+
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        stateHolder = MockStateHolder()
+        viewModel = StopwatchViewModel(durationConverter: durationConverter, stateHolder: stateHolder)
+        actionsRelay = PublishRelay()
+        input = StopwatchViewModel.Input(actions: actionsRelay.asSignal())
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testStateIsLoaded() {
+        let runningState = RunningState(startAt: 100, currentLap: Lap(duration: 200), finishedLaps: [Lap(duration: 300)])
+        let expectedState = State.running(runningState)
+        stateHolder.state = expectedState
+
+        let resultExpectation = expectation(description: "result")
+        let disposeBag = DisposeBag()
+
+        viewModel.setup(with: input)?.disposed(by: disposeBag)
+
+        var obtainedLaps: [LapItem] = []
+        viewModel.allLaps.debounce(0.1)
+            .asObservable()
+            .take(1)
+            .subscribe(onNext: { laps in
+                obtainedLaps.append(contentsOf: laps)
+                resultExpectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [resultExpectation], timeout: 1)
+
+        // TODO: check obtainedLaps
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+}
+
+final class MockStateHolder: StopwatchStateHolder {
+
+    var state: State = .initial
+
+    func obtain() -> State {
+        return state
     }
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func store(_ state: State) {
+        self.state = state
     }
-
 }
