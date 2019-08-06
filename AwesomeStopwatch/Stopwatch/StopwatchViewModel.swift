@@ -29,14 +29,14 @@ final class StopwatchViewModel {
     func setup(with input: Input) -> Disposable? {
 
         let bindUI: (ObservableSchedulerContext<State>) -> Observable<Action> = bind(self) { _, _ in
-            return Bindings(subscriptions: [], mutations: [input.actions])
+            return Bindings(subscriptions: [], events: [input.actions])
         }
 
         let state = Observable.system(
             initialState: stateHolder.obtain(),
             reduce: reduce,
             scheduler: SerialDispatchQueueScheduler(qos: .default),
-            scheduledFeedback: [bindUI]
+            feedback: [bindUI]
         )
         .share(replay: 1)
 

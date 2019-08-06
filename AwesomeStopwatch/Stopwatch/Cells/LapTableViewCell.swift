@@ -23,7 +23,7 @@ final class LapTableViewCell: UITableViewCell {
         }
 
         let bag = DisposeBag()
-        Observable<Int>.timer(0, period: 0.01, scheduler: MainScheduler.instance)
+        Observable<Int>.timer(.seconds(0), period: .milliseconds(10), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.lapDurationLabel.text = durationConverter.string(from: model.duration + CFAbsoluteTimeGetCurrent() - startAt)
             })

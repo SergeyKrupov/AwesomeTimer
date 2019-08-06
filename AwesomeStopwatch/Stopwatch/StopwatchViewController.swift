@@ -48,7 +48,7 @@ final class StopwatchViewController: UIViewController {
             .flatMapLatest { state -> Driver<TimeInterval> in
                 switch state {
                 case let .running(startAt, duration):
-                    return Driver<Int>.timer(0, period: 0.01)
+                    return Driver<Int>.timer(.seconds(0), period: .milliseconds(10))
                         .map { _ in CFAbsoluteTimeGetCurrent() - startAt + duration }
                 case let .stopped(duration):
                     return .just(duration)
