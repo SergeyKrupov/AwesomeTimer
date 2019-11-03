@@ -13,8 +13,8 @@ import UIKit
 final class StopwatchViewController: UIViewController {
 
     @IBOutlet private var timeLabel: UILabel!
-    @IBOutlet private var leftButton: UIButton!
-    @IBOutlet private var rightButton: UIButton!
+    @IBOutlet private var leftButton: RoundButton!
+    @IBOutlet private var rightButton: RoundButton!
     @IBOutlet private var lapsTableView: UITableView!
 
     // MARK: - Dependencies
@@ -82,23 +82,29 @@ final class StopwatchViewController: UIViewController {
     private let disposeBag = DisposeBag()
 }
 
-private extension UIButton {
+private extension RoundButton {
 
     func setup(with event: Action) {
         let title: String
+        let color: UIColor
         switch event {
         case .start:
             title = "Start"
+            color = .green
         case .stop:
             title = "Stop"
+            color = .red
         case .reset:
             title = "Reset"
+            color = .lightGray
         case .lap:
             title = "Lap"
+            color = .lightGray
         }
 
         UIView.performWithoutAnimation {
             setTitle(title, for: .normal)
+            self.color = color
             layoutIfNeeded()
         }
     }

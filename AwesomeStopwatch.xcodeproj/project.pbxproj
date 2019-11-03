@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C37D05B4719E340787C7DEF /* Pods_AwesomeStopwatchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38BD0B1C886D8CEBABB9E897 /* Pods_AwesomeStopwatchUITests.framework */; };
 		30D4B1036D1D365A04D47F91 /* Pods_AwesomeStopwatchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BB70B63FA537D829BC0581 /* Pods_AwesomeStopwatchTests.framework */; };
+		A546C1A1236F23F000FEEA0A /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A546C1A0236F23F000FEEA0A /* RoundButton.swift */; };
 		A5610FAB229ED6CC00C9B6C5 /* Lap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAA229ED6CC00C9B6C5 /* Lap.swift */; };
 		A5610FAD229ED72700C9B6C5 /* RunningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAC229ED72700C9B6C5 /* RunningState.swift */; };
 		A5610FAF229ED79200C9B6C5 /* PausedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5610FAE229ED79200C9B6C5 /* PausedState.swift */; };
@@ -55,6 +56,7 @@
 		3D4AC631784A18416C19DC7D /* Pods-AwesomeStopwatchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatchTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests.release.xcconfig"; sourceTree = "<group>"; };
 		5614B4F5283C9E3A5DB63A75 /* Pods-AwesomeStopwatchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatchTests.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		701A1C80E0E6B3F086D1BBFD /* Pods-AwesomeStopwatchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeStopwatchUITests.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeStopwatchUITests/Pods-AwesomeStopwatchUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A546C1A0236F23F000FEEA0A /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		A5610FAA229ED6CC00C9B6C5 /* Lap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lap.swift; sourceTree = "<group>"; };
 		A5610FAC229ED72700C9B6C5 /* RunningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningState.swift; sourceTree = "<group>"; };
 		A5610FAE229ED79200C9B6C5 /* PausedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausedState.swift; sourceTree = "<group>"; };
@@ -123,6 +125,14 @@
 				38BD0B1C886D8CEBABB9E897 /* Pods_AwesomeStopwatchUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A546C19F236F23D500FEEA0A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A546C1A0236F23F000FEEA0A /* RoundButton.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		A5610FB0229EF41200C9B6C5 /* Cells */ = {
@@ -208,6 +218,7 @@
 		A5E7039B229EACD100DBE636 /* Stopwatch */ = {
 			isa = PBXGroup;
 			children = (
+				A546C19F236F23D500FEEA0A /* Views */,
 				A562917A229F017F00C57B38 /* UIModels */,
 				A5610FB5229EF6F800C9B6C5 /* Utils */,
 				A5610FB0229EF41200C9B6C5 /* Cells */,
@@ -509,6 +520,7 @@
 				A5E7039D229EAD8100DBE636 /* StopwatchViewController.swift in Sources */,
 				A5610FAD229ED72700C9B6C5 /* RunningState.swift in Sources */,
 				A562917C229F01A100C57B38 /* LapItem.swift in Sources */,
+				A546C1A1236F23F000FEEA0A /* RoundButton.swift in Sources */,
 				A5E7039A229EACCE00DBE636 /* DependenciesContainer.swift in Sources */,
 				A5B91DAF229F123A007AA097 /* StopwatchStateHolder.swift in Sources */,
 				A5E70369229EA83800DBE636 /* AppDelegate.swift in Sources */,
