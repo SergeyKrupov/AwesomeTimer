@@ -1,6 +1,6 @@
 PODS:
   - Differentiator (4.0.1)
-  - RxCocoa (5.0.0):
+  - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
   - RxDataSources (4.0.1):
@@ -10,10 +10,12 @@ PODS:
   - RxFeedback (3.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
-  - RxRelay (5.0.0):
+  - RxRelay (5.0.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.0)
-  - SwiftLint (0.34.0)
+  - RxSwift (5.0.1)
+  - RxTest (5.0.1):
+    - RxSwift (~> 5)
+  - SwiftLint (0.36.0)
   - Swinject (2.6.2)
   - SwinjectStoryboard (2.2.0):
     - Swinject (~> 2.6)
@@ -23,33 +25,36 @@ DEPENDENCIES:
   - RxDataSources (~> 4.0.1)
   - RxFeedback (~> 3.0)
   - RxSwift (~> 5.0.0)
-  - SwiftLint (~> 0.34.0)
+  - RxTest
+  - SwiftLint
   - Swinject (~> 2.6.0)
   - SwinjectStoryboard (~> 2.2.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Differentiator
     - RxCocoa
     - RxDataSources
     - RxFeedback
     - RxRelay
     - RxSwift
+    - RxTest
     - SwiftLint
     - Swinject
     - SwinjectStoryboard
 
 SPEC CHECKSUMS:
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxFeedback: 4260d8dad5bba28b182c0b9ff5bce68c260de183
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
-  SwiftLint: 79d48a17c6565dc286c37efb8322c7b450f95c67
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  RxTest: 0132f952a61da82d5233abedaa559df91e5330e5
+  SwiftLint: fc9859e4e1752340664851f667bb1898b9c90114
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   SwinjectStoryboard: 32512ef16c2b0ff5b8f823b23539c4a50f6d3383
 
-PODFILE CHECKSUM: 7373035a4078f74cc1d9b918b883ef89181e6773
+PODFILE CHECKSUM: 7277d0633d7d06f0bf36a6b34e9b30a52db1ce7f
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Sergey V. Krupov. All rights reserved.
 //
 
+import RxSwift
 import Swinject
 import SwinjectStoryboard
 
@@ -24,7 +25,8 @@ final class StopwatchAssembly: Assembly {
         container.register(StopwatchViewModel.self) { resolver -> StopwatchViewModel in
             return StopwatchViewModel(
                 durationConverter: resolver.resolve(DurationConverter.self)!,
-                stateHolder: resolver.resolve(StopwatchStateHolder.self)!
+                stateHolder: resolver.resolve(StopwatchStateHolder.self)!,
+                scheduler: SerialDispatchQueueScheduler(qos: .default)
             )
         }
 

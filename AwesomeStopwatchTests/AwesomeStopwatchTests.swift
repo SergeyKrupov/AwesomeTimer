@@ -8,137 +8,118 @@
 
 import RxCocoa
 import RxSwift
+import RxTest
 import XCTest
+
 @testable import AwesomeStopwatch
 
 class AwesomeStopwatchTests: XCTestCase {
 
     var stateHolder: MockStateHolder!
+    var scheduler: TestScheduler!
     var viewModel: StopwatchViewModel!
-    var actionsRelay: PublishRelay<Action>!
-    var input: StopwatchViewModel.Input!
 
     let durationConverter = DurationConverter()
 
     override func setUp() {
         stateHolder = MockStateHolder()
-        viewModel = StopwatchViewModel(durationConverter: durationConverter, stateHolder: stateHolder)
-        actionsRelay = PublishRelay()
-        input = StopwatchViewModel.Input(actions: actionsRelay.asSignal())
+        scheduler = TestScheduler(initialClock: 0, simulateProcessingDelay: false)
+        viewModel = StopwatchViewModel(durationConverter: durationConverter, stateHolder: stateHolder, scheduler: scheduler)
     }
 
+    // Проверка того, что состояние секундомера восстанавливается после запуска
     func testStateIsLoaded() {
+        let input = StopwatchViewModel.Input(actions: .never())
+
         let runningState = RunningState(startAt: 100, currentLap: Lap(duration: 200), finishedLaps: [Lap(duration: 300)])
-        stateHolder.state = State.running(runningState)
+        stateHolder.state = .running(runningState)
 
-        let resultExpectation = expectation(description: "result")
         let disposeBag = DisposeBag()
-
-        viewModel.setup(with: input)?.disposed(by: disposeBag)
-
-        var obtainedLaps: [LapItem] = []
-        viewModel.allLaps.debounce(0.1)
-            .asObservable()
-            .take(1)
-            .subscribe(onNext: { laps in
-                obtainedLaps.append(contentsOf: laps)
-                resultExpectation.fulfill()
-            })
-            .disposed(by: disposeBag)
-
-        wait(for: [resultExpectation], timeout: 1)
+        let observer = scheduler.start(created: 0, subscribed: 100, disposed: 1000) { [viewModel = viewModel!] () -> Observable<[LapItem]> in
+            viewModel.setup(with: input)?.disposed(by: disposeBag)
+            return viewModel.allLaps.asObservable()
+        }
 
         let expectedLaps = [
             LapItem(name: "Lap 2", duration: 200, starteAt: 100),
             LapItem(name: "Lap 1", duration: 300, starteAt: nil)
         ]
 
-        XCTAssertEqual(expectedLaps, obtainedLaps)
+        XCTAssertEqual(observer.events, [Recorded(time: 100, value: .next(expectedLaps))])
     }
 
+    // Проверка того, что после изменения состояния, оно сохраняется
     func testStateIsSaved() {
+        let actions: TestableObservable<Action> = scheduler.createColdObservable([
+            Recorded(time: 200, value: .next(.start))
+        ])
 
-        let resultExpectation = expectation(description: "result")
+        let input = StopwatchViewModel.Input(actions: actions.asSignal(onErrorRecover: { _ in .never() }))
+
         let disposeBag = DisposeBag()
-
         viewModel.setup(with: input)?.disposed(by: disposeBag)
+        scheduler.start()
 
-        viewModel.allLaps.debounce(0.1)
-            .asObservable()
-            .filter { !$0.isEmpty}
-            .take(1)
-            .subscribe(onNext: { laps in
-                resultExpectation.fulfill()
-            })
-            .disposed(by: disposeBag)
-
-        let now = CFAbsoluteTimeGetCurrent()
-        actionsRelay.accept(.start)
-
-        wait(for: [resultExpectation], timeout: 1)
-
-        guard case let .running(runningState) = stateHolder.state else {
+        guard case let .running(state) = stateHolder.state else {
             XCTFail("Expected running state")
             return
         }
 
-        XCTAssert(fabs(runningState.startAt - now) < 0.1)
-        XCTAssertEqual(runningState.currentLap.duration, 0)
-        XCTAssertEqual(runningState.finishedLaps, [])
+        XCTAssert(fabs(state.startAt - CFAbsoluteTimeGetCurrent()) < 0.1)
+        XCTAssertEqual(state.currentLap.duration, 0)
+        XCTAssertEqual(state.finishedLaps, [])
     }
 
     func testStartRunning() {
+        let actions: TestableObservable<Action> = scheduler.createColdObservable([
+            Recorded(time: 200, value: .next(.start))
+        ])
+
+        let input = StopwatchViewModel.Input(actions: actions.asSignal(onErrorRecover: { _ in .never() }))
 
         let disposeBag = DisposeBag()
-
         viewModel.setup(with: input)?.disposed(by: disposeBag)
 
-        let stateExpectation = expectation(description: "Ожидание начала отсчёта")
-        viewModel.timerState
-            .asObservable()
-            .debounce(0.1, scheduler: SerialDispatchQueueScheduler(qos: .default))
-            .take(1)
-            .subscribe(onNext: { state in
-                if case .running = state {
-                    stateExpectation.fulfill()
-                } else {
-                    XCTFail("Некорректное состояние viewModel.timerState")
-                }
-            })
+        let timerStateObserver = scheduler.createObserver(StopwatchViewModel.TimerState.self)
+        viewModel.timerState.asObservable()
+            .subscribe(timerStateObserver)
             .disposed(by: disposeBag)
 
-        let leftButtonActionExpectation = expectation(description: "Ожидание изменения левой кнопки")
-        viewModel.leftButtonAction
-            .asObservable()
-            .debounce(0.1, scheduler: SerialDispatchQueueScheduler(qos: .default))
-            .take(1)
-            .subscribe(onNext: { action in
-                if case .lap = action {
-                    leftButtonActionExpectation.fulfill()
-                } else {
-                    XCTFail("Некорректное состояние viewModel.leftButtonAction")
-                }
-            })
+
+        let leftButtonObserver = scheduler.createObserver(Action.self)
+        viewModel.leftButtonAction.asObservable()
+            .subscribe(leftButtonObserver)
             .disposed(by: disposeBag)
 
-        let rightButtonActionExpectation = expectation(description: "Ожидание изменения правой кнопки")
-        viewModel.rightButtonAction
-            .asObservable()
-            .debounce(0.1, scheduler: SerialDispatchQueueScheduler(qos: .default))
-            .take(1)
-            .subscribe(onNext: { action in
-                if case .stop = action {
-                    rightButtonActionExpectation.fulfill()
-                } else {
-                    XCTFail("Некорректное состояние rightButtonAction")
-                }
-            })
+        let rightButtonObserver = scheduler.createObserver(Action.self)
+        viewModel.rightButtonAction.asObservable()
+            .subscribe(rightButtonObserver)
             .disposed(by: disposeBag)
 
-        actionsRelay.accept(.start)
+        scheduler.start()
 
-        wait(for: [stateExpectation, leftButtonActionExpectation, rightButtonActionExpectation], timeout: 1)
+        XCTAssertEqual(timerStateObserver.events.count, 2)
+        guard timerStateObserver.events.first?.time == 0, case let .next(value1) = timerStateObserver.events.first?.value, case .stopped = value1 else {
+            XCTFail()
+            return
+        }
+
+        guard timerStateObserver.events.last?.time == 200, case let .next(value2) = timerStateObserver.events.last?.value, case .running = value2 else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(leftButtonObserver.events, [
+            Recorded(time: 0, value: .next(.reset)),
+            Recorded(time: 200, value: .next(.lap))
+        ])
+
+        XCTAssertEqual(rightButtonObserver.events, [
+            Recorded(time: 0, value: .next(.start)),
+            Recorded(time: 200, value: .next(.stop))
+        ])
     }
+
 }
 
 final class MockStateHolder: StopwatchStateHolder {

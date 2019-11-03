@@ -21,9 +21,10 @@ final class StopwatchViewModel {
         let actions: Signal<Action>
     }
 
-    init(durationConverter: DurationConverter, stateHolder: StopwatchStateHolder) {
+    init(durationConverter: DurationConverter, stateHolder: StopwatchStateHolder, scheduler: SchedulerType) {
         self.durationConverter = durationConverter
         self.stateHolder = stateHolder
+        self.scheduler = scheduler
     }
 
     func setup(with input: Input) -> Disposable? {
@@ -35,7 +36,7 @@ final class StopwatchViewModel {
         let state = Observable.system(
             initialState: stateHolder.obtain(),
             reduce: reduce,
-            scheduler: SerialDispatchQueueScheduler(qos: .default),
+            scheduler: scheduler,
             feedback: [bindUI]
         )
         .share(replay: 1)
@@ -46,10 +47,8 @@ final class StopwatchViewModel {
         allLaps = makeLaps(state)
 
         return state.distinctUntilChanged()
-            .observeOn(SerialDispatchQueueScheduler(qos: .default))
-            .subscribe(onNext: { [holder = stateHolder] state in
-                holder.store(state)
-            })
+            .observeOn(scheduler)
+            .subscribe(onNext: stateHolder.store)
     }
 
     // MARK: - Public
@@ -61,6 +60,7 @@ final class StopwatchViewModel {
     // MARK: - Private
     private let durationConverter: DurationConverter
     private let stateHolder: StopwatchStateHolder
+    private let scheduler: SchedulerType
 
     private func makeLeftButtonAction(_ state: Observable<State>) -> Driver<Action> {
         return state

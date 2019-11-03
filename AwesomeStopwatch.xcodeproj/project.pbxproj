@@ -275,6 +275,7 @@
 				A5E70375229EA83900DBE636 /* Sources */,
 				A5E70376229EA83900DBE636 /* Frameworks */,
 				A5E70377229EA83900DBE636 /* Resources */,
+				528A8C956CAA4DE448C266F6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -377,6 +378,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		528A8C956CAA4DE448C266F6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AwesomeStopwatchTests/Pods-AwesomeStopwatchTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		89B3FC1BC116D88F021F9267 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
