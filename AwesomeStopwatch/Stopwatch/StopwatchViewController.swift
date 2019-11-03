@@ -24,6 +24,7 @@ final class StopwatchViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
 
         let actionsRelay = PublishRelay<Action>()
 
@@ -33,15 +34,11 @@ final class StopwatchViewController: UIViewController {
             .disposed(by: disposeBag)
 
         viewModel.leftButtonAction
-            .drive(onNext: { [button = leftButton!] event in
-                button.setup(with: event)
-            })
+            .drive(onNext: leftButton.setup)
             .disposed(by: disposeBag)
 
         viewModel.rightButtonAction
-            .drive(onNext: { [button = rightButton!] event in
-                button.setup(with: event)
-            })
+            .drive(onNext: rightButton.setup)
             .disposed(by: disposeBag)
 
         viewModel.timerState
@@ -54,7 +51,7 @@ final class StopwatchViewController: UIViewController {
                     return .just(duration)
                 }
             }
-            .map { [converter = durationConverter!] duration in converter.string(from: duration) }
+            .map(durationConverter.string)
             .drive(timeLabel.rx.text)
             .disposed(by: disposeBag)
 
@@ -68,10 +65,8 @@ final class StopwatchViewController: UIViewController {
             .bind(to: actionsRelay)
             .disposed(by: disposeBag)
 
-        let identifier = "LapCell"
-        lapsTableView.register(UINib(nibName: "LapTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
         viewModel.allLaps
-            .drive(lapsTableView.rx.items(cellIdentifier: identifier)) { [converter = durationConverter!] _, model, cell in
+            .drive(lapsTableView.rx.items(cellIdentifier: cellIdentifier)) { [converter = durationConverter!] _, model, cell in
                 let lapCell = cell as! LapTableViewCell
                 lapCell.setup(with: model, durationConverter: converter)
             }
@@ -79,7 +74,18 @@ final class StopwatchViewController: UIViewController {
     }
 
     // MARK: - Private
+    private let cellIdentifier = "LapCell"
     private let disposeBag = DisposeBag()
+
+    private func setupTableView() {
+        let lineView = UIView()
+        lineView.backgroundColor = lapsTableView.separatorColor
+        lineView.bounds = CGRect(x: 0, y: 0, width: 0, height: 1.0 / UIScreen.main.scale)
+        lapsTableView.tableHeaderView = lineView
+        lapsTableView.separatorInset = .zero
+
+        lapsTableView.register(UINib(nibName: "LapTableViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
+    }
 }
 
 private extension RoundButton {
